@@ -1,41 +1,10 @@
 package main
 
 import (
-	"encoding/json"
-	"log"
-	"net/http"
+	"encoding/base64"
+	"fmt"
 )
 
-type person struct {
-	First string
-}
-
 func main() {
-	http.HandleFunc("/encode", foo)
-	http.HandleFunc("/decode", bar)
-	http.ListenAndServe(":8080", nil)
-}
-
-func foo(w http.ResponseWriter, r *http.Request) {
-	p1 := person{
-		First: "Janny",
-	}
-
-	p2 := person{
-		First: "James",
-	}
-
-	people := []person{p1, p2}
-
-	if err := json.NewEncoder(w).Encode(people); err != nil {
-		log.Println("Encode bad data", err)
-	}
-}
-
-func bar(w http.ResponseWriter, r *http.Request) {
-	people := []person{}
-	if err := json.NewDecoder(r.Body).Decode(&people); err != nil {
-		log.Println("Decode bad data", err)
-	}
-	log.Println(people)
+	fmt.Println(base64.StdEncoding.EncodeToString([]byte("user:pass")))
 }
