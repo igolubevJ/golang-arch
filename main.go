@@ -33,5 +33,9 @@ func foo(w http.ResponseWriter, r *http.Request) {
 }
 
 func bar(w http.ResponseWriter, r *http.Request) {
-
+	people := []person{}
+	if err := json.NewDecoder(r.Body).Decode(&people); err != nil {
+		log.Println("Decode bad data", err)
+	}
+	log.Println(people)
 }
